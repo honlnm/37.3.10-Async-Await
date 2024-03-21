@@ -2,21 +2,27 @@ let favNumber = 16;
 let baseURL = "http://numbersapi.com";
 
 // 1.
-$.getJSON(`${baseURL}/${favNumber}?json`).then(data => {
+async function part1() {
+    let data = await $.getJSON(`${baseURL}/${favNumber}?json`);
     console.log(data);
-});
+}
+part1();
 
 // 2.
-let favNumbers = [3, 6, 9];
-$.getJSON(`${baseURL}/${favNumbers}?json`).then(data => {
+const favNumbers = [3, 6, 9];
+async function part2() {
+    let data = await $.getJSON(`${baseURL}/${favNumbers}?json`);
     console.log(data);
-});
+}
+part2();
 
 // 3.
-Promise.all(
-    Array.from({ length: 4 }, () => {
-        return $.getJSON(`${baseURL}/${favNumber}?json`);
-    })
-).then(facts => {
-    facts.forEach(data => $("body").append(`<p>${data.text}</p>`));
-});
+async function part3() {
+    let facts = await Promise.all(
+        Array.from({ length: 4 }, () => $.getJSON(`${baseURL}/${favNumber}?json`))
+    )
+    facts.forEach(data => {
+        $('body').append(`<p>${data.text}</p>`);
+    });
+}
+part3();
